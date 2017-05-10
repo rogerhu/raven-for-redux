@@ -47,7 +47,6 @@ describe("raven-for-redux", function() {
       expect(this.mockTransport).toHaveBeenCalledTimes(1);
       const { extra } = this.mockTransport.mock.calls[0][0].data;
       expect(extra.lastAction).toBe(undefined);
-      expect(extra.state).toEqual(0);
     });
     it("returns the result of the next dispatch function", function() {
       expect(this.store.dispatch({ type: "INCREMENT" })).toEqual({
@@ -71,8 +70,6 @@ describe("raven-for-redux", function() {
       }).toThrow();
 
       expect(this.mockTransport).toHaveBeenCalledTimes(1);
-      const { extra } = this.mockTransport.mock.calls[0][0].data;
-      expect(extra.state).toBe(1);
     });
     it("logs a breadcrumb for each action", function() {
       this.store.dispatch({ type: "INCREMENT", extra: "FOO" });
@@ -103,7 +100,6 @@ describe("raven-for-redux", function() {
       expect(this.mockTransport).toHaveBeenCalledTimes(1);
       const { extra } = this.mockTransport.mock.calls[0][0].data;
       expect(extra.lastAction).toEqual({ type: "DOUBLE" });
-      expect(extra.state).toEqual(4);
     });
   });
   describe("with all the options enabled", function() {
@@ -149,8 +145,6 @@ describe("raven-for-redux", function() {
       }).toThrow();
 
       expect(this.mockTransport).toHaveBeenCalledTimes(1);
-      const { extra } = this.mockTransport.mock.calls[0][0].data;
-      expect(extra.state).toEqual("transformed state 1");
     });
     it("derives breadcrumb data from action", function() {
       this.store.dispatch({ type: "INCREMENT", extra: "FOO" });
